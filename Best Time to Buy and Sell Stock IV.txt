@@ -1,0 +1,27 @@
+class Solution {
+public:
+    int maxProfit(int k, vector<int>& prices) {
+    int n=prices.size();
+        vector<vector<vector<int>>> dp(n+1,vector<vector<int>> (2,vector<int> (k+1,0)));
+        for(int ind=n-1;ind>=0;ind--)
+        {
+            for(int buy=0;buy<2;buy++)
+            {
+                for(int tcnt=1;tcnt<=k;tcnt++)
+                {
+                    int profit=0;
+        if(buy)
+        {
+            profit=max(-prices[ind]+dp[ind+1][0][tcnt],dp[ind+1][1][tcnt]);
+        }
+        else
+        {
+            profit=max(dp[ind+1][0][tcnt],prices[ind]+dp[ind+1][1][tcnt-1]);
+        }
+        dp[ind][buy][tcnt]=profit;
+                }
+            }
+        }
+    return dp[0][1][k];        
+    }
+};
