@@ -1,0 +1,35 @@
+class Solution {
+  public:
+  int dp[101][101];
+    string sp[101][101];
+    int helper(int lo, int hi, vector<int> arr){
+        if(lo==hi){
+            sp[lo][hi]="A";
+            sp[lo][hi][0]+=lo;
+            return 0;
+        }
+        if(dp[lo][hi]!=-1) return dp[lo][hi];
+        sp[lo][hi]="(";
+        dp[lo][hi]=INT_MAX;
+        for(int i=lo;i<hi;++i){
+            dp[lo][hi]=min(dp[lo][hi],helper(lo,i,arr)+helper(i+1,hi,arr)+arr[lo]*arr[i+1]*arr[hi+1]);
+        }
+        for(int i=lo;i<hi;++i){
+            if(dp[lo][hi]==helper(lo,i,arr)+helper(i+1,hi,arr)+arr[lo]*arr[i+1]*arr[hi+1]){
+                sp[lo][hi]+=sp[lo][i];
+                sp[lo][hi]+=sp[i+1][hi];
+                break;
+            }
+        }
+        sp[lo][hi]+=")";
+        return dp[lo][hi];
+    }
+    string matrixChainOrder(vector<int> &arr) {
+        // code here
+        int n=arr.size();
+        memset(dp,-1,sizeof(dp));
+        helper(0,n-2,arr);
+        // cout<<sp[0][n-2]<<" ";
+        return sp[0][n-2];
+    }
+};
