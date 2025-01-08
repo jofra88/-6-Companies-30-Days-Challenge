@@ -1,0 +1,41 @@
+class Solution {
+public:
+    bool isValidSudoku(vector<vector<char>>& board) {
+    map<char,int> mpprow;
+    for(int i=0;i<9;i++)
+    {
+        mpprow.clear();
+        for(int j=0;j<9;j++)
+        {
+            if(isdigit(board[i][j]) && mpprow.find(board[i][j])!=mpprow.end())
+            return 0;
+            mpprow[board[i][j]]++;
+        }
+    }  
+    for(int i=0;i<9;i++)
+    {
+        mpprow.clear();
+        for(int j=0;j<9;j++)
+        {
+            if(isdigit(board[j][i]) && mpprow.find(board[j][i])!=mpprow.end())
+            return 0;
+            mpprow[board[j][i]]++;
+        }
+    }   
+    int mpp[9][9] = {0};
+    for(int i=0;i<9;i++)
+    {
+        for(int j=0;j<9;j++)
+        {
+            if(isdigit(board[i][j]))
+            {
+            int num = board[i][j] - '0' - 1, k = i / 3 * 3 + j / 3;
+            if(mpp[k][num])
+            return false;
+            mpp[k][num] = 1;
+            }
+        }
+    }
+    return 1;
+    }
+};
