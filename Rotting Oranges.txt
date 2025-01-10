@@ -1,0 +1,55 @@
+class Solution {
+public:
+    int orangesRotting(vector<vector<int>>& grid) {
+    int cnt=0;
+    int cntfresh=0;
+    int m=grid.size();
+    int n=grid[0].size();
+    int maxi=0;
+    queue<pair<pair<int,int>,int>> q;
+    int vis[m][n];
+    for(int i=0;i<m;i++)
+    {
+        for(int j=0;j<n;j++)
+        {
+            vis[i][j]=1;
+        }
+    }
+    for(int i=0;i<m;i++)
+    {
+        for(int j=0;j<n;j++)
+        {
+           if(grid[i][j]==1)
+           {
+               cntfresh++;
+               vis[i][j]=0;
+           }
+           if(grid[i][j]==2)
+           {
+               q.push({{i,j},0});
+           }
+        }
+    } 
+    int drow[]={-1,0,1,0};
+    int dcol[]={0,-1,0,1};
+    while(!q.empty())
+    {
+        int noderow=q.front().first.first;
+        int nodecol=q.front().first.second;
+        int minute=q.front().second;
+        q.pop();
+        for(int k=0;k<4;k++)
+        {
+            if(noderow+drow[k]>=0&&nodecol+dcol[k]>=0&&noderow+drow[k]<m && nodecol+dcol[k]<n&&grid[noderow+drow[k]][nodecol+dcol[k]]==1 && vis[noderow+drow[k]][nodecol+dcol[k]]==0)
+            {
+                vis[noderow+drow[k]][nodecol+dcol[k]]=1;
+                q.push({{noderow+drow[k],nodecol+dcol[k]},minute+1});
+                cnt++;
+            }
+        }
+        maxi=max(maxi,minute);
+    }   
+    if(cnt!=cntfresh)return -1;
+    return maxi;
+    }
+};
