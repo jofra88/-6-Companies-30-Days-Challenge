@@ -1,0 +1,34 @@
+class Solution {
+public:
+    static bool comparator(pair<char,int> &p1,pair<char,int> &p2)
+    {
+        if(p1.second>p2.second)
+        return 1;
+        return 0;
+    }
+    string frequencySort(string s) {
+    map<char,int> mpp;
+    int n=s.length();
+    string ans="";
+    for(int i=0;i<n;i++)
+    {
+        mpp[s[i]]++;
+    }
+    vector<pair<char,int>> v;
+    for(auto itr:mpp)
+    {
+        v.push_back({itr.first,itr.second});
+    }    
+    sort(v.begin(),v.end(),comparator);
+    for(auto itr:v)
+    {
+        int cnt=0;
+        while(cnt<itr.second)
+        {
+            ans+=itr.first;
+            cnt++;
+        }
+    }
+    return ans;
+    }
+};
