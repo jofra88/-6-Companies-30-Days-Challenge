@@ -1,0 +1,63 @@
+class Solution {
+public:
+    string helper(int num)
+    {
+        string ans="";
+        map<int,string> mpp;
+        map<int,string> tenmpp;
+        mpp[0]="Zero";
+        mpp[1]="One";
+        mpp[2]="Two";
+        mpp[3]="Three";
+        mpp[4]="Four";
+        mpp[5]="Five";
+        mpp[6]="Six";
+        mpp[7]="Seven";
+        mpp[8]="Eight";
+        mpp[9]="Nine";
+        mpp[10]="Ten";
+        mpp[11]="Eleven";
+        mpp[12]="Twelve";
+        mpp[13]="Thirteen";
+        mpp[14]="Fourteen";
+        mpp[15]="Fifteen";
+        mpp[16]="Sixteen";
+        mpp[17]="Seventeen";
+        mpp[18]="Eighteen";
+        mpp[19]="Nineteen";
+        tenmpp[2]="Twenty";
+        tenmpp[3]="Thirty";
+        tenmpp[4]="Forty";
+        tenmpp[5]="Fifty";
+        tenmpp[6]="Sixty";
+        tenmpp[7]="Seventy";
+        tenmpp[8]="Eighty";
+        tenmpp[9]="Ninety";
+        
+        if(num==0)
+        return "";
+        if(num<20)
+        return mpp[num];
+        if(num<100)
+        return tenmpp[num/10]+(num%10?" "+mpp[num%10]:"");
+        return mpp[num/100]+" Hundred"+(num%100?" "+helper(num%100):"");
+    }
+    string numberToWords(int num) {
+    if(num==0)
+    return "Zero";
+    string ans="";
+    vector<string> prefix={""," Thousand"," Million"," Billion"};
+    int i=0;
+    while(num>0)
+    {
+        int lower=num%1000;
+        if(lower>0)
+        {
+        ans=helper(lower)+prefix[i]+(ans.empty()?"":" "+ans);
+        }
+        num/=1000;
+        i++;
+    } 
+    return ans;  
+    }
+};
