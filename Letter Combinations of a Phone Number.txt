@@ -1,0 +1,36 @@
+class Solution {
+public:
+    void f(int ind,string tmp,string digits,vector<string>& ans,map<char,string> mpp,int n)
+    {
+            if(ind>=n)
+            {
+                ans.push_back(tmp);
+                return;
+            }
+                    string str=mpp[digits[ind]];
+                    for(int i=0;i<str.size();i++)
+                    {
+
+                        tmp+=str[i];
+                        f(ind+1,tmp,digits,ans,mpp,n);
+                        tmp.pop_back();
+                    }
+    }
+    vector<string> letterCombinations(string digits) {
+    vector<string> ans;
+    int n=digits.size();
+    if(n==0)
+    return {};
+    map<char,string> mpp;
+    mpp['2']="abc";  
+    mpp['3']="def";
+    mpp['4']="ghi";
+    mpp['5']="jkl";
+    mpp['6']="mno";
+    mpp['7']="pqrs";
+    mpp['8']="tuv";
+    mpp['9']="wxyz";
+    f(0,"",digits,ans,mpp,n);
+    return ans; 
+    }
+};

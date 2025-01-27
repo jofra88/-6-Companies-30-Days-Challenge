@@ -1,0 +1,50 @@
+class Solution {
+public:
+    void f(int ind,vector<int> arr, int k, int n,int cursum,vector<int> tmp,set<vector<int>>& s)
+	{
+        if(tmp.size()>k)
+        {
+            return;
+        }
+        if(cursum>n)
+        {
+            return;
+        }
+        if(cursum==n && tmp.size()==k)
+	    {
+            s.insert(tmp);
+            return;
+	    }
+	    if(ind==arr.size())
+	    {
+        return;
+        }
+        if((cursum+arr[ind])<=n)
+        {
+            tmp.push_back(arr[ind]);
+	        f(ind+1,arr,k,n,cursum+arr[ind],tmp,s);
+            tmp.pop_back();
+        }
+	    f(ind+1,arr,k,n,cursum,tmp,s);
+	}
+    vector<vector<int>> combinationSum3(int k, int n) {
+        vector<int> tmp;
+        vector<int> candidates;
+        for(int i=0;i<9;i++)
+        {
+            candidates.push_back(i+1);
+        }
+        vector<vector<int>> ans;
+        set<vector<int>> s;
+        for(int i=0;i<10;i++)
+        {
+            cout<<candidates[i]<<endl;
+        }
+        f(0,candidates,k,n,0,tmp,s);
+        for(auto itr:s)
+        {
+            ans.push_back(itr);
+        }
+        return ans ;     
+    }
+};
